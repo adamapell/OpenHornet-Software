@@ -15,7 +15,7 @@ This is the API documentation of the OpenHornet Software. You will find a docume
 * [OpenHornet Website](https://www.openhornet.com)
 * [OpenHornet main git repo](https://github.com/jrsteensen/OpenHornet)
 * [OpenHornet Discord](https://discord.gg/G5PA5ju)
-* [Donate to OpenHornet](https://www.openhornet.com/campaigns/donate/)
+* [Donate to OpenHornet](https://www.openhornet.com/donate.html)
 
 * [OpenHornet Software Docs](https://jrsteensen.github.io/OpenHornet-Software/index.html)
 * [OpenHornet Software Wiki](https://github.com/jrsteensen/OpenHornet-Software/wiki)
