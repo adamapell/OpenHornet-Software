@@ -15,7 +15,7 @@ Closes #<issue number>
 - [ ] This change requires a documentation update outside of the automatically-generated Doxygen documentation.
 
 ### Checklist:
-- [ ] [I have complied with the software manual]((https://jrsteensen.github.io/OpenHornet-Software/d7/d78/md__software_manual.html)) for this project, to include style requirements
+- [ ] [I have complied with the software manual](https://docs.openhornet.com/software/d7/d78/md__software_manual.html) for this project, to include style requirements
 - [ ] I have incremented the version of the program in the header, using semantic versioning (Do not increment major version (x.0.0) until post-1.0 package release)
 - [ ] I have added myself as a co-author in the program header
 - [ ] I have performed a self-review of my own code
@@ -26,7 +26,7 @@ Closes #<issue number>
 - [ ] My changes generate no new warnings on compile in Arduino IDE
 - [ ] Any dependent changes have been merged and published in downstream modules
 - [ ] (For sketches only) This sketch complies with OH-INTERCONNECT v**<insert version number here>**
-- [ ] If this sketch requires additional libraries, [I have added it as a sub-module per the Arduino Libraries section of the Software Manual.](https://jrsteensen.github.io/OpenHornet-Software/d7/d78/md__software_manual.html)
+- [ ] If this sketch requires additional libraries, [I have added it as a sub-module per the Arduino Libraries section of the Software Manual.](https://docs.openhornet.com/software/d7/d78/md__software_manual.html)
 
 ### How Has This Been Tested?
 

@@ -2,7 +2,7 @@
 [TOC]
 ![Logo](https://raw.githubusercontent.com/jrsteensen/OpenHornet-Software/225a887c08abd848a763da4956ea5762373f4505/docs/img/logos/oh_horiz.svg)
 
-![Docs](https://github.com/jrsteensen/OpenHornet-Software/actions/workflows/pages/pages-build-deployment/badge.svg?branch=gh-pages)
+[![Docs](https://img.shields.io/badge/docs-docs.openhornet.com-blue)](https://docs.openhornet.com/software/)
 
 OpenHornet is a F/A-18C OFP 13C Lot 20 1:1 Replica Simulator, consisting of a physical structure and electrical/software interfaces to a PC to be driven by Digital Combat Simulator (DCS).
 
@@ -17,7 +17,7 @@ This is the API documentation of the OpenHornet Software. You will find a docume
 * [OpenHornet Discord](https://discord.gg/G5PA5ju)
 * [Donate to OpenHornet](https://www.openhornet.com/donate.html)
 
-* [OpenHornet Software Docs](https://jrsteensen.github.io/OpenHornet-Software/index.html)
+* [OpenHornet Software Docs](https://docs.openhornet.com/software/)
 * [OpenHornet Software Wiki](https://github.com/jrsteensen/OpenHornet-Software/wiki)
 
 ## Licensing

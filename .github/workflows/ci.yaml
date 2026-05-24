@@ -127,7 +127,7 @@ jobs:
 
           ## Documentation
 
-          - Public docs site: https://jrsteensen.github.io/OpenHornet-Software/
+          - Public docs site: https://docs.openhornet.com/software/
           - Local bundled docs: `docs/index.html`
           - Firmware flashing guide: open the public docs site or local bundled docs and search for `Flashing`.
           EOF
@@ -144,4 +144,4 @@ jobs:
           body: |
             Download `OpenHornet-Software-${{ github.ref_name }}.zip` below for the release package. It contains prebuilt firmware, embedded source, libraries, build support, generated local documentation, and the license.
 
-            Documentation: https://jrsteensen.github.io/OpenHornet-Software/
+            Documentation: https://docs.openhornet.com/software/

@@ -1,4 +1,4 @@
-name: Generate & Deploy Doxygen Docs
+name: Validate Doxygen Docs
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-documentation:
@@ -18,22 +18,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Build the HTML documentation
-      - name: Doxygen Action
+      - name: Build Doxygen documentation
         uses: mattnotmitt/doxygen-action@1.12.0
+        env:
+          PROJECT_VERSION: ${{ github.ref_name }}
         with:
           doxyfile-path: Doxyfile
           working-directory: ./docs
 
-      # Deploy the HTML documentation to GitHub Pages
-      # Runs on push to main (i.e. after a PR merge) or manual dispatch
-      - name: GH Pages Deployment
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/html/
-          enable_jekyll: false
-          allow_empty_commit: false
-          force_orphan: true
-          publish_branch: gh-pages
+      - name: Confirm generated docs
+        run: test -f docs/html/index.html
+
+  dispatch-docs-deployment:
+    runs-on: ubuntu-latest
+    needs: build-documentation
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    steps:
+      - name: Dispatch Cloudflare docs deployment
+        env:
+          DOCS_DEPLOY_DISPATCH_TOKEN: ${{ secrets.DOCS_DEPLOY_DISPATCH_TOKEN }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          SOURCE_REF: ${{ github.ref_name }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          if [ -z "${DOCS_DEPLOY_DISPATCH_TOKEN}" ]; then
+            echo "::error::DOCS_DEPLOY_DISPATCH_TOKEN is required to trigger jrsteensen/OpenHornet-Docs."
+            exit 1
+          fi
+
+          payload="$(jq -n \
+            --arg repository "${SOURCE_REPOSITORY}" \
+            --arg ref "${SOURCE_REF}" \
+            --arg sha "${SOURCE_SHA}" \
+            '{event_type:"docs-source-updated", client_payload:{repository:$repository, ref:$ref, sha:$sha, software_ref:"main", hardware_ref:"master"}}')"
+
+          curl --fail-with-body -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${DOCS_DEPLOY_DISPATCH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/jrsteensen/OpenHornet-Docs/dispatches \
+            -d "${payload}"
