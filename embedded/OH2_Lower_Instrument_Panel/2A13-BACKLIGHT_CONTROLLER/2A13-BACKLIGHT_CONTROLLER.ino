@@ -341,7 +341,7 @@ void setup() {
     RC_2.addPanel<Rc2AllPanels>();
 
     LC_FLOOD.addPanel<LcFloodLights>();
-    //RC_FLOOD.addPanel<RcFloodLights>();                             // Compiles, but crashes Mega2560 on reset
+    //@bug RC_FLOOD.addPanel<RcFloodLights>();                             // Compiles, but crashes Mega2560 on reset
 
     FastLED.setMaxPowerInVoltsAndMilliamps(VOLTAGE, MAX_MILLIAMPS);   // Set the maximum power in volts and milliamps
     FastLED.setMaxRefreshRate(100);                                   // Set the maximum refresh rate to 100 Hz instead of std. 400 Hz. Slightly reduces CPU load.
