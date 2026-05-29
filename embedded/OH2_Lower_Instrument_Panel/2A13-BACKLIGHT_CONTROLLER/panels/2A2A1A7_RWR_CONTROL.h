@@ -10,10 +10,10 @@
  *   ----------------------------------------------------------------------------------
  *  
  * @file      2A2A1A7_RWR_CONTROL.h
- * @author    Ulukaii
- * @date      24.05.2025
- * @version   t 0.3.2
- * @copyright Copyright 2016-2025 OpenHornet. See 2A13-BACKLIGHT_CONTROLLER.ino for details.
+ * @author    Ulukaii, Adam Apell(AdamA)
+ * @date      05.29.2026
+ * @version   0.3.3 (tested)
+ * @copyright Copyright 2016-2026 OpenHornet. See 2A13-BACKLIGHT_CONTROLLER.ino for details.
  * @brief     Implements backlighting and indicators for the RWR Control panel.
  *            It consists of two parts:
  *            - An array with the LEDs and their roles (LED_INSTR_BL, LED_RWR_BIT, LED_RWR_FAIL)
@@ -34,24 +34,25 @@
  * @remark  This table is stored in PROGMEM for memory efficiency.
  * @see     LedRole.h for the list of LED roles and LedStruct.h for the Led structure.
  ********************************************************************************************************************/
-const int RWR_CONTROL_LED_COUNT = 32;  // Total number of LEDs in the panel
+const int RWR_CONTROL_LED_COUNT = 33;   // Total number of LEDs in the panel
 const Led rwrControlLedTable[RWR_CONTROL_LED_COUNT] PROGMEM = {
-    {0, LED_INSTR_BL}, {1, LED_INSTR_BL}, {2, LED_INSTR_BL}, {3, LED_INSTR_BL},
-    {4, LED_INSTR_BL}, {5, LED_INSTR_BL}, {6, LED_RWR_BIT}, {7, LED_RWR_BIT_FAIL},
-    {8, LED_RWR_BIT_FAIL}, {9, LED_RWR_BIT}, {10, LED_RWR_OFFSET}, {11, LED_RWR_OFFSET_EN},
-    {12, LED_RWR_OFFSET_EN}, {13, LED_RWR_OFFSET}, {14, LED_RWR_SPECIAL}, {15, LED_RWR_SPECIAL_EN},
-    {16, LED_RWR_SPECIAL_EN}, {17, LED_RWR_SPECIAL}, {18, LED_RWR_DISPLAY}, {19, LED_RWR_LIMIT},
-    {20, LED_RWR_LIMIT}, {21, LED_RWR_DISPLAY}, {22, LED_RWR_POWER}, {23, LED_RWR_POWER},
-    {24, LED_RWR_NONE}, {25, LED_RWR_NONE}, {26, LED_INSTR_BL}, {27, LED_INSTR_BL},
-    {28, LED_INSTR_BL}, {29, LED_INSTR_BL}, {30, LED_INSTR_BL}, {31, LED_INSTR_BL}
+    {0, LED_INSTR_BL}, {1, LED_INSTR_BL}, {2, LED_INSTR_BL}, {3, LED_INSTR_BL},                         //Backlight LEDs (0-6)
+    {4, LED_INSTR_BL}, {5, LED_INSTR_BL}, {6, LED_INSTR_BL},                                           
+    {7, LED_RWR_BIT}, {8, LED_RWR_BIT_FAIL}, {9, LED_RWR_BIT_FAIL}, {10, LED_RWR_BIT},                  //BIT Button Indicators (7-10)
+    {11, LED_RWR_OFFSET}, {12, LED_RWR_OFFSET_EN}, {13, LED_RWR_OFFSET_EN}, {14, LED_RWR_OFFSET},       //Offset Button Indicators (11-14)
+    {15, LED_RWR_SPECIAL}, {16, LED_RWR_SPECIAL_EN}, {17, LED_RWR_SPECIAL_EN}, {18, LED_RWR_SPECIAL},   //Special Button Indicators (15-18)
+    {19, LED_RWR_DISPLAY}, {20, LED_RWR_LIMIT}, {21, LED_RWR_LIMIT}, {22, LED_RWR_DISPLAY},             //Display Button Indicators (19-22)
+    {23, LED_INSTR_BL}, {24, LED_RWR_POWER}, {25, LED_RWR_POWER}, {26, LED_INSTR_BL},                   //Power Button Indicators (23-26)
+    {27, LED_INSTR_BL}, {28, LED_INSTR_BL},{29, LED_INSTR_BL}, {30, LED_INSTR_BL},                      //Backlight LEDs (27-32)
+    {31, LED_INSTR_BL}, {32, LED_INSTR_BL}
 };
 
 /********************************************************************************************************************
  * @brief   RWR Control Panel class
  * @details Backlighting controller for the RWR Control panel.
- *          Total LEDs: 32
- *          Backlight LEDs: 13 
- *          Indicator LEDs: 19 (indices 7-25)
+ *          Total LEDs: 33
+ *          Backlight LEDs: 13 (indices 0-6, 27-32)
+ *          Indicator LEDs: 20 (indices 7-26)
  * @remark  This class inherits from the "basic" Panel class in panels/Panel.h
  *          It also enforces a singleton pattern; this is required to use DCS-BIOS callbacks in class methods.
  * @see     Panel.h for the base class implementation
@@ -121,11 +122,11 @@ private:
             setIndicatorColor(LED_RWR_POWER, NVIS_GREEN_A);
             // RWR BIT and RWR BIT FAIL
             if (rwrFailActive) {
-                setIndicatorColor(LED_RWR_BIT, NVIS_RED);
+                setIndicatorColor(LED_RWR_BIT, NVIS_GREEN_A);
                 setIndicatorColor(LED_RWR_BIT_FAIL, NVIS_RED);
             } else {
-                setIndicatorColor(LED_RWR_BIT, NVIS_WHITE);
-                setIndicatorColor(LED_RWR_BIT_FAIL, NVIS_WHITE);
+                setIndicatorColor(LED_RWR_BIT, NVIS_GREEN_A);
+                setIndicatorColor(LED_RWR_BIT_FAIL, NVIS_BLACK);
             }
 
             // RWR OFFSET and RWR OFFSET EN
@@ -133,8 +134,8 @@ private:
                 setIndicatorColor(LED_RWR_OFFSET, NVIS_GREEN_A);
                 setIndicatorColor(LED_RWR_OFFSET_EN, NVIS_GREEN_A);
             } else {
-                setIndicatorColor(LED_RWR_OFFSET, NVIS_WHITE);
-                setIndicatorColor(LED_RWR_OFFSET_EN, NVIS_WHITE);
+                setIndicatorColor(LED_RWR_OFFSET, NVIS_GREEN_A);
+                setIndicatorColor(LED_RWR_OFFSET_EN, NVIS_BLACK);
             }
 
             // RWR SPECIAL and RWR SPECIAL EN
@@ -142,8 +143,8 @@ private:
                 setIndicatorColor(LED_RWR_SPECIAL, NVIS_GREEN_A);
                 setIndicatorColor(LED_RWR_SPECIAL_EN, NVIS_GREEN_A);
             } else {
-                setIndicatorColor(LED_RWR_SPECIAL, NVIS_WHITE);
-                setIndicatorColor(LED_RWR_SPECIAL_EN, NVIS_WHITE);
+                setIndicatorColor(LED_RWR_SPECIAL, NVIS_GREEN_A);
+                setIndicatorColor(LED_RWR_SPECIAL_EN, NVIS_BLACK);
             }
 
             // RWR LIMIT DISPLAY 
@@ -151,8 +152,8 @@ private:
                 setIndicatorColor(LED_RWR_DISPLAY, NVIS_GREEN_A);
                 setIndicatorColor(LED_RWR_LIMIT, NVIS_GREEN_A);
             } else {
-                setIndicatorColor(LED_RWR_DISPLAY, NVIS_WHITE);
-                setIndicatorColor(LED_RWR_LIMIT, NVIS_WHITE);
+                setIndicatorColor(LED_RWR_DISPLAY, NVIS_GREEN_A);
+                setIndicatorColor(LED_RWR_LIMIT, NVIS_BLACK);
             }
         }
     }
