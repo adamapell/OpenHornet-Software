@@ -32,8 +32,8 @@
 /**
  * @file    2A13-BACKLIGHT_CONTROLLER.ino
  * @author  Ulukaii, Arribe, Higgins
- * @date    October 12, 2025
- * @version V 0.4.5 (tested)
+ * @date    May 31, 2026
+ * @version V 0.5.5 (tested)
  * @warning This sketch is based on OH-Interconnect. Adapt it to your actual wiring and 
  *          panel versions.
  * @brief   Controls backlights & most annunciators. 
@@ -341,7 +341,7 @@ void setup() {
     RC_2.addPanel<Rc2AllPanels>();
 
     LC_FLOOD.addPanel<LcFloodLights>();
-    //@bug RC_FLOOD.addPanel<RcFloodLights>();                             // Compiles, but crashes Mega2560 on reset
+    RC_FLOOD.addPanel<RcFloodLights>();                             
 
     FastLED.setMaxPowerInVoltsAndMilliamps(VOLTAGE, MAX_MILLIAMPS);   // Set the maximum power in volts and milliamps
     FastLED.setMaxRefreshRate(100);                                   // Set the maximum refresh rate to 100 Hz instead of std. 400 Hz. Slightly reduces CPU load.
